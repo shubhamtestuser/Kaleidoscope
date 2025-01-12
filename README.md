@@ -4,9 +4,9 @@ These instructions will guide you to set up and run the tests on your local mach
 
 Prerequisites
 
-```Node.js
+Node.js
 npm or yarn
-Git```
+Git
 
 Installation
 
@@ -30,17 +30,20 @@ Install Playwright browsers:
 Running Tests
 
 Run All Tests
-
-```npx playwright test```
+```npx playwright test
+```
 
 Run Tests in a Specific File
 
-```npx playwright test tests/example.spec.ts```
+```npx playwright test tests/example.spec.ts
+```
 
 Run Tests in a Specific Browser
 
-```npx playwright test --project=chromium```
+```npx playwright test --project=chromium
+```
 
 Debug Tests
 
-```npx playwright test --debug```
+```npx playwright test --debug
+```
