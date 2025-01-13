@@ -176,9 +176,9 @@ test.describe("Sign Up, Fill Scholar Application Form, and Verify Details on Rev
     // verify High School Zip Code
     await commonPage.verifySubmittedAnswers2(CommonData.elements.highSchoolZipCode, '80203')
     // verify GPA
-    await commonPage.verifySubmittedAnswers2(CommonData.elements.gpa, '3') // issue it should show 3.7
+    await commonPage.verifySubmittedAnswers2(CommonData.elements.gpa, '3') // issue - it should show 3.7
     // verify Year of High School Graduation
-    await commonPage.verifySubmittedAnswers2(CommonData.elements.yearOfHighSchoolGraduation, '01/01/2021') //it show only the year
+    await commonPage.verifySubmittedAnswers2(CommonData.elements.yearOfHighSchoolGraduation, '01/01/2021') //issue - it should show only the year
 
     // verify the essay page
     await commonPage.verifyPageTitleInReviewPage(CommonData.elements.essay)
