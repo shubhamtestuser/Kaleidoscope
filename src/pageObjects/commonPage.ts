@@ -58,6 +58,11 @@ export class CommonPage {
         return await this.page.locator(`//button//p[text()='Submit']`)
     }
 
+    // Method to locate an element by data-testid
+    async getByDataTestId(value : string){
+        return await this.page.locator(`//*[@data-testid="${value}"]`)
+    }
+
 
 
     
@@ -65,6 +70,10 @@ export class CommonPage {
     async loginToApplyScholarship(email : string) {
         // click on login and apply button
         await this.page.getByText(CommonData.elements.loginToApply).click();
+        // wait for the login page title
+        await this.page.getByText(CommonData.elements.signInToKaleidoscope).waitFor()
+        // verify the login page title is visible
+        expect (await this.page.getByText(CommonData.elements.signInToKaleidoscope)).toBeVisible()
         // wait for email field
         await this.page.getByPlaceholder(CommonData.elements.emailAddress).waitFor()
         // enter the email
@@ -75,7 +84,11 @@ export class CommonPage {
 
     // Method to sign up using email and other personal details
     async signUpUsingEmail(email : string, firstName : string, lastName: string, country : string, mobile : string, password :string) {
+        // login
         await this.loginToApplyScholarship(email);
+        // verify the Let's create your account page title
+        await this.page.getByText(CommonData.elements.createYourAccountTitle).waitFor()
+        expect(await this.page.getByText(CommonData.elements.createYourAccountTitle)).toBeVisible()
         // enter first name
         await (await this.inputFieldByFieldName(CommonData.elements.firstName)).fill(firstName);
         // enter Last name
@@ -89,9 +102,19 @@ export class CommonPage {
         await (await this.inputFieldByFieldName(CommonData.elements.createPassword)).fill(password);
         // check the checkbox "I confirm that I am at least 13 years old"
         await this.page.locator(`//input[@aria-label="${CommonData.elements.ageConfirmation}"]`).click();
-        await this.page.waitForTimeout(5000)
+        // wait for data processing
+        await this.page.waitForResponse(response => response.status() === 200);
         // click submit button
         await this.page.getByText(CommonData.elements.submit).click();
+    }
+
+    // Method to verify the user is logged in sucessfully
+    async verifyTheUserIsLoggedIn(){
+        // verify the user profile Avatar is visible
+        await (await this.getByContainsClass(CommonData.elements.avatar)).waitFor()
+        expect(await this.getByContainsClass(CommonData.elements.avatar)).toBeVisible()
+        // verify the page title
+        expect(await this.getByDataTestId(CommonData.elements.pageTitle)).toHaveText(CommonData.elements.letsGetToKnowYouTitle)
     }
 
     // Method to fill the 'Let's Get To Know You' form with provided details
@@ -111,6 +134,8 @@ export class CommonPage {
         await this.page.getByPlaceholder(CommonData.elements.enterYourCountry).fill(country);
         // click the country option
         await (await this.getBySpanText(country)).click();
+        // wait for data processing
+        await this.page.waitForTimeout(5000)
     }
 
     // Method to add an extracurricular activity entry
@@ -130,8 +155,8 @@ export class CommonPage {
         await (await this.inputField(CommonData.elements.descriptionOfInvolvement)).fill(description);
         // click on the add button
         await (await this.getBySpanText(CommonData.elements.add)).click();
-        // wait for page load
-        await this.page.waitForTimeout(5000);
+        // wait for data processing
+        await this.page.waitForTimeout(3000)
     }
 
     // Method to fill high school information
@@ -157,7 +182,9 @@ export class CommonPage {
         // upload transcript
         await this.page.locator(`//input[@type="file"]`).setInputFiles(file);
         // wait for the file to be uploaded
-        await this.page.waitForTimeout(20000);
+        // Wait for the specific API request and assert its response status
+        await this.page.waitForResponse(response => response.url().includes(CommonData.data.processFileEndpoint) && response.status() === 200);
+        await this.page.waitForTimeout(5000);
     }
 
     // Method to check the essay checkbox for a specific value

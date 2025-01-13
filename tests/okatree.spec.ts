@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
-import { CommonPage } from '../pageObjects/commonPage';
-import { CommonData } from '../data/commonData';
+import { CommonPage } from '../src/pageObjects/commonPage';
+import { CommonData } from '../src/data/commonData';
 
 const timestamp = new Date().toISOString().replace(/[-:.]/g, "").toLowerCase()
 let email = `shubham94243+${timestamp}@gmail.com`
@@ -13,6 +13,8 @@ test.describe("Sign Up, Fill Scholar Application Form, and Verify Details on Rev
     await page.goto('/program/sdet-test-scholarship')
     // Register a user with the given input details
     await commonPage.signUpUsingEmail(email, 'Shubham', 'Panday', 'India', '913625417896', 'StrongPss#0$&1')
+    // verify that you are sucessfully logged in
+    await commonPage.verifyTheUserIsLoggedIn()
   })
 
 
@@ -22,7 +24,6 @@ test.describe("Sign Up, Fill Scholar Application Form, and Verify Details on Rev
     // page 1
     // Fill out all Required Fields
     await commonPage.fillLetsGetToKnowYouForm(CommonData.data.alaska, 'Indore', 'Sector A 123 Address', '456986', 'India')
-    await page.waitForTimeout(10000)
     // click to go to next page
     await page.getByText(CommonData.elements.nextPage).click()
 
@@ -119,7 +120,8 @@ test.describe("Sign Up, Fill Scholar Application Form, and Verify Details on Rev
     await commonPage.inputDataInEassyBox(CommonData.elements.essayAboutAnimals, 'This is the eassy about Animals')
 
     // wait for the unchecked checkbox to be removed
-    await page.waitForTimeout(10000)
+    // wait for data processing
+    await page.waitForResponse(response => response.status() === 200);
     // click the next button to go to next page
     await page.getByText(CommonData.elements.nextPage).click()
 
@@ -196,6 +198,8 @@ test.describe("Sign Up, Fill Scholar Application Form, and Verify Details on Rev
     await (await commonPage.submitButton()).click()
 
     // wait for the application to be submitted sucessfully 
+    // wait for data processing
+    await page.waitForResponse(response => response.status() === 200);
     await page.waitForTimeout(5000)
     
     // get back to review page

@@ -59,9 +59,14 @@ export const CommonData = {
         "highSchoolZipCode": "High School Zip Code",
         "gpa": "GPA",
         "yearOfHighSchoolGraduation": "Year of High School Graduation",
+        "signInToKaleidoscope" : "Sign In To Kaleidoscope",
+        "createYourAccountTitle" : "Let's create your account.",
+        "avatar" : "mantine-Avatar-placeholder",
+        "pageTitle" : "page-title",
 
-    },
+    },  
     data: {
-        "alaska": "Alaska"
+        "alaska": "Alaska",
+        "processFileEndpoint" : "/api/public/admin/asset/ProcessLargeFile"
     }
 }
