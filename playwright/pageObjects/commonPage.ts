@@ -65,8 +65,8 @@ export class CommonPage {
     async loginToApplyScholarship(email : string) {
         // click on login and apply button
         await this.page.getByText(CommonData.elements.loginToApply).click();
-        // wait for page load
-        await this.page.waitForTimeout(10000);
+        // wait for email field
+        await this.page.getByPlaceholder(CommonData.elements.emailAddress).waitFor()
         // enter the email
         await this.page.getByPlaceholder(CommonData.elements.emailAddress).fill(email);
         // click next button
@@ -190,6 +190,8 @@ export class CommonPage {
 
     // Method to verify the page title in the review page
     async verifyPageTitleInReviewPage(value : string) {
+        // wait for the page title
+        await (await this.getBySpanText(value)).waitFor()
         // verify the page title is visible
         await expect(await this.getBySpanText(value)).toBeVisible();
     }

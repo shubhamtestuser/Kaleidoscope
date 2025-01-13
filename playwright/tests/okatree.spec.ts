@@ -125,9 +125,6 @@ test.describe("Sign Up, Fill Scholar Application Form, and Verify Details on Rev
 
     // Review page
 
-    // verify all the pages are displayed
-    // wait for page load
-    await page.waitForTimeout(10000)
     // verify the Lets get to know you in review page
     await commonPage.verifyPageTitleInReviewPage(CommonData.elements.letsGetToKnowYouTitle)
     // expand Lets get to know you section
