@@ -9,6 +9,8 @@ test.describe("Sign Up, Fill Scholar Application Form, and Verify Details on Rev
 
   test.beforeEach("visit URL and signup to the application", async ({ page }) => {
     const commonPage = new CommonPage(page)
+    // Set 20 seconds as the default timeout for all actions
+    page.setDefaultTimeout(20000);
     // visit url
     await page.goto('/program/sdet-test-scholarship')
     // Register a user with the given input details
@@ -20,7 +22,8 @@ test.describe("Sign Up, Fill Scholar Application Form, and Verify Details on Rev
 
   test("Submit Scholar Application and Confirm Data on Review Page", async ({ page }) => {
     const commonPage = new CommonPage(page)
-
+    // Set 20 seconds as the default timeout for all actions
+    page.setDefaultTimeout(20000);
     // page 1
     // Fill out all Required Fields
     await commonPage.fillLetsGetToKnowYouForm(CommonData.data.alaska, 'Indore', 'Sector A 123 Address', '456986', 'India')

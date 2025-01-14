@@ -63,6 +63,8 @@ export const CommonData = {
         "createYourAccountTitle" : "Let's create your account.",
         "avatar" : "mantine-Avatar-placeholder",
         "pageTitle" : "page-title",
+        "next" : "Next",
+        "mobile" : "1 (702) 123-4567",
 
     },  
     data: {
